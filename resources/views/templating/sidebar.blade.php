@@ -1,7 +1,7 @@
 <div>
     <div class="brand-logo d-flex align-items-center justify-content-between">
-        <a href="./index.html" class="text-nowrap logo-img">
-            <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
+        <a href="#" class="text-nowrap logo-img">
+           <h4>Si AKad SMK</h4>
         </a>
         <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -37,13 +37,53 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('mapel') }}" aria-expanded="{{ request()->routeIs('mapel') ? 'true' : 'false' }}">
+                <a class="sidebar-link" href="{{ route('kelas') }}" aria-expanded="{{ request()->routeIs('kelas') ? 'true' : 'false' }}">
 
 
                     <span>
                         <i class="ti ti-article"></i>
                     </span>
+                    <span class="hide-menu">Kelas</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('mapel') }}" aria-expanded="{{ request()->routeIs('mapel') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="ti ti-book"></i>
+                    </span>
                     <span class="hide-menu">Mapel</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('ekskul') }}" aria-expanded="{{ request()->routeIs('ekskul') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="fas fa-handshake"></i>
+                    </span>
+                    <span class="hide-menu">ekskul</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('siswa') }}" aria-expanded="{{ request()->routeIs('siswa') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="fas fa-graduation-cap"></i>
+                    </span>
+                    <span class="hide-menu">Siswa</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('walikelas') }}" aria-expanded="{{ request()->routeIs('walikelas') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="fa-solid fa-user-tie"></i>
+                    </span>
+                    <span class="hide-menu">Wali Kelas</span>
                 </a>
             </li>
             {{-- <li class="sidebar-item">

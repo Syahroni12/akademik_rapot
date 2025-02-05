@@ -17,7 +17,7 @@
                                         Cari
                                     </button>
                                     <button class="btn btn-secondary" type="button"
-                                        onclick="window.location.href='/jurusan'">
+                                        onclick="window.location.href='{{ route('ekskul') }}'">
                                         reresh
                                     </button>
                                 </div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Tambah Jurusan
+                Tambah Ekskul
             </button>
 
             <div class="table-responsive">
@@ -35,7 +35,7 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Jurusan</th>
+                            <th scope="col">Ekstrakulikuler</th>
                             <th scope="col">Aksi</th>
 
                         </tr>
@@ -44,7 +44,7 @@
                         @foreach ($data as $item)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
-                                <td>{{ $item->jurusan }}</td>
+                                <td>{{ $item->ekskul }}</td>
 
                                 <td> <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#editModal" onclick="edit({{ $item }})">
@@ -70,15 +70,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Jurusan</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Ekstrakulikuler</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('tambah_jurusan') }}" method="post">
+                    <form action="{{ route('tambah_ekskul') }}" method="post">
                         @csrf
                         <div class="mb-3">
-                            <label for="jurusan" class="form-label">Jurusan</label>
-                            <input type="text" class="form-control" id="jurusan" name="jurusan">
+                            <label for="ekskul" class="form-label">Ekstrakulikuler</label>
+                            <input type="text" class="form-control" id="ekskul" name="ekskul">
                         </div>
 
 
@@ -99,13 +99,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('edit_jurusan') }}" method="post">
+                    <form action="{{ route('edit_ekskul') }}" method="post">
                         @csrf
                         <div class="mb-3">
-                            <label for="jurusan" class="form-label">Jurusan</label>
-                            <input type="text" class="form-control" id="jurusann" name="jurusan">
+                            <label for="ekskul" class="form-label">Ekstrakulikuler</label>
+                            <input type="text" class="form-control" id="ekskull" name="ekskul">
                         </div>
-                        <input type="hidden" name="id" id="id_jurusan">
+                        <input type="hidden" name="id" id="id_ekskul">
 
 
                 </div>
@@ -123,7 +123,7 @@
         function hapus(id) {
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
-                text: "Anda akan menghapus jurusan ini!",
+                text: "Anda akan menghapus Ekstrakulikuler  ini!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -131,15 +131,15 @@
                 confirmButtonText: 'Ya, Hapus!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location = "/hapus_jurusan/" + id;
+                    window.location = "/hapus_ekskul/" + id;
                 }
             })
         }
 
 
         function edit(data) {
-            document.getElementById('jurusann').value = data.jurusan;
-            document.getElementById('id_jurusan').value = data.id;
+            document.getElementById('ekskull').value = data.ekskul;
+            document.getElementById('id_ekskul').value = data.id;
         }
     </script>
 @endsection
