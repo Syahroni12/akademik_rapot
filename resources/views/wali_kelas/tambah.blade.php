@@ -44,10 +44,10 @@
                 </div>
                 <div class="mb-3">
                     <label for="Jurusan" class="form-label">Kelas</label>
-                    <select class="form-select" aria-label="Default select example" name="id_kelas">
+                    <select class="form-select" aria-label="Default select example" name="id_detail_kelas">
                         <option selected>Pilih kelas</option>
                         @foreach ($kelas as $item)
-                            <option value="{{ $item->id }}">{{ $item->kelas }}</option>
+                            <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
                         @endforeach
                     </select>
                 </div>

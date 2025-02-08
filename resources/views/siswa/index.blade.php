@@ -17,7 +17,7 @@
                                         Cari
                                     </button>
                                     <button class="btn btn-secondary" type="button"
-                                        onclick="window.location.href='{{ route('mapel') }}'">
+                                        onclick="window.location.href='{{ route('siswa') }}'">
                                         reresh
                                     </button>
                                 </div>
@@ -46,7 +46,7 @@
                             <tr>
                                 <th scope="row">{{ $item->nisn }}</th>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ $item->kelas->kelas }}</td>
+                                <td>{{ $item->detail_kelas->nama_kelas }}</td>
                                 <td>{{ $item->semester }}</td>
                                 <td>{{ $item->tahun_masuk }}</td>
 

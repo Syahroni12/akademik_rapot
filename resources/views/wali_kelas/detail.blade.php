@@ -40,7 +40,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="Jurusan" class="form-label">Wali Kelas di Kelas</label>
-                    <input type="text" name="" id="" value="{{ $data->kelas->kelas }}" class="form-control" disabled>
+                    <input type="text" name="" id="" value="{{ $data->detail_kelas->nama_kelas }}" class="form-control" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="Alamat" class="form-label">Alamat</label>

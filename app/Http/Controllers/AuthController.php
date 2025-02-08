@@ -37,7 +37,7 @@ class AuthController extends Controller
             Alert::success('success', 'Login Berhasil di lakukan');
             return redirect()->route('dashboard');
         } else {
-            Alert::error('Gagal', 'No. Telfon / Password salah');
+            Alert::error('Gagal', 'Username / Password salah');
             return redirect()->back()->withInput();
         }
 
@@ -52,5 +52,14 @@ class AuthController extends Controller
             }
         } catch (\Throwable $th) {
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        Alert::success('Success', 'Logout Berhasil di lakukan');
+        return redirect()->route('login');
     }
 }

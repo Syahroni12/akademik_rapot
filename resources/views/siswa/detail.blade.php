@@ -27,9 +27,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                    <input type="text" class="form-control" id="tempat_lahir" aria-describedby="tempat_lahir"
-                        name="tempat_lahir" value="{{ $data->tempat_lahir }}" disabled>
+                    <label for="tempat_lahir" class="form-label">Alamat</label>
+                   <textarea name="" id="" cols="30" rows="10">{{ $data->tempat_lahir }}</textarea>
                 </div>
 
                 <div class="mb-3">
@@ -44,7 +43,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="Jurusan" class="form-label">Kelas</label>
-                    <input type="text" name="" id="" value="{{ $data->kelas->kelas }}" class="form-control" disabled>
+                    <input type="text" name="" id="" value="{{ $data->detail_kelas->nama_kelas }}" class="form-control" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="Jurusan" class="form-label">Semester</label>

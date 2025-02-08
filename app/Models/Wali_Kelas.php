@@ -14,9 +14,9 @@ class Wali_Kelas extends Model
     protected $guarded = ['nip'];
     public $incrementing = false;
 
-    public function kelas()
+    public function detail_kelas()
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
+        return $this->belongsTo(Detail_kelas::class, 'id_detail_kelas', 'id');
     }
 
 

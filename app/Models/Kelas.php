@@ -18,6 +18,11 @@ class Kelas extends Model
         return $this->belongsTo(Jurusan::class, 'id_jurusan', 'id');
     }
 
+    public function detail_kelas()
+    {
+        return $this->hasMany(Detail_kelas::class, 'id_kelas', 'id');
+    }
+
     public function mapel()
     {
         return $this->hasMany(Mapel::class, 'id_kelas', 'id');

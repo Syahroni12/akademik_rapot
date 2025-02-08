@@ -42,20 +42,11 @@
                                         <a href="javascript:void(0)"
                                             class="d-flex align-items-center gap-2 dropdown-item">
                                             <i class="ti ti-user fs-6"></i>
-                                            <p class="mb-0 fs-3">My Profile</p>
+                                            <p class="mb-0 fs-3">My Profile({{ auth()->user()->username }})</p>
                                         </a>
-                                        <a href="javascript:void(0)"
-                                            class="d-flex align-items-center gap-2 dropdown-item">
-                                            <i class="ti ti-mail fs-6"></i>
-                                            <p class="mb-0 fs-3">My Account</p>
-                                        </a>
-                                        <a href="javascript:void(0)"
-                                            class="d-flex align-items-center gap-2 dropdown-item">
-                                            <i class="ti ti-list-check fs-6"></i>
-                                            <p class="mb-0 fs-3">My Task</p>
-                                        </a>
-                                        <a href="./authentication-login.html"
-                                            class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+
+                                        <a href="#"
+                                            class="btn btn-outline-primary mx-3 mt-2 d-block" onclick="logout()">Logout</a>
                                     </div>
                                 </div>
                             </li>
@@ -80,4 +71,24 @@
             </div>
         </div>
     </div>
+
+<script>
+    function logout() {
+
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Anda akan keluar dari sistem ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Keluar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/logout";
+            }
+        })
+    }
+</script>
     @include('templating.footer')
+

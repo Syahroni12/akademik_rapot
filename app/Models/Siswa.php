@@ -14,9 +14,9 @@ class Siswa extends Model
     protected $guarded = ['nisn'];
     public $incrementing = false;
 
-    public function kelas()
+    public function detail_kelas()
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
+        return $this->belongsTo(Detail_kelas::class, 'id_detail_kelas', 'id');
     }
 
     public function user()
@@ -27,5 +27,10 @@ class Siswa extends Model
     public function pengikut_ekskul()
     {
         return $this->hasMany(Pengikut_Ekskul::class, 'id_siswa', 'nisn');
+    }
+
+    public function penilaians()
+    {
+        return $this->hasMany(Penilaian::class, 'id_siswa', 'nisn');
     }
 }

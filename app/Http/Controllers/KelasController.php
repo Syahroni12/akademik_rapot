@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail_kelas;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
@@ -20,6 +21,83 @@ class KelasController extends Controller
             ->paginate(20);
         return view('kelas.kelas', compact('title', 'data'));
     }
+
+
+    public function detail_kelas()
+    {
+        $title = 'Detail Kelas';
+        $data = Detail_kelas::with('kelas')->where('nama_kelas', 'like', '%' . request('cari') . '%')->orWhereHas('kelas', function ($query) {
+            $query->where('kelas', 'like', '%' . request('cari') . '%');
+        })
+            ->paginate(20);
+
+        return view('detail_kelas.index', compact('title', 'data'));
+    }
+
+    public function tambah_detail_kelas()
+    {
+        $title = 'Tambah Detail Kelas';
+        $kelas = Kelas::all();
+        return view('detail_kelas.tambah', compact('title', 'kelas'));
+    }
+
+    public function tambah_detail_kelass(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_kelas' => 'required|exists:kelas,id',
+            'nama_kelas' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $messages = $validator->errors()->all();
+            Alert::error('Gagal', $messages);
+            return back()->withErrors($validator)->withInput();
+        }
+        $detail_kelas = new Detail_kelas();
+        $detail_kelas->id_kelas = $request->id_kelas;
+        $detail_kelas->nama_kelas = $request->nama_kelas;
+        $detail_kelas->save();
+        Alert::success('Berhasil', 'Data berhasil ditambahkan');
+        return redirect()->route('detail_kelas')->with('success', 'Data berhasil ditambahkan');
+    }
+
+    public function edit_detail_kelas($id)
+    {
+        $title = 'Edit Detail Kelas';
+        $data = Detail_kelas::find($id);
+        $kelas = Kelas::all();
+        return view('detail_kelas.edit', compact('title', 'data', 'kelas'));
+    }
+
+    public function edit_detail_kelass(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'id_kelas' => 'required|exists:kelas,id',
+            'nama_kelas' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $messages = $validator->errors()->all();
+            Alert::error('Gagal', $messages);
+            return back()->withErrors($validator)->withInput();
+        }
+        $detail_kelas = Detail_kelas::find($id);
+        $detail_kelas->id_kelas = $request->id_kelas;
+        $detail_kelas->nama_kelas = $request->nama_kelas;
+        $detail_kelas->save();
+        Alert::success('Berhasil', 'Data berhasil diubah');
+        return redirect()->route('detail_kelas');
+    }
+
+    public function hapus_detail_kelas($id)
+    {
+        $detail_kelas = Detail_kelas::find($id);
+        $detail_kelas->delete();
+        Alert::success('Berhasil', 'Data berhasil dihapus');
+        return redirect()->route('detail_kelas');
+    }
+
+
 
     public function tambah()
     {
@@ -60,7 +138,7 @@ class KelasController extends Controller
         return redirect()->route('kelas');
     }
 
-public function edit($id)
+    public function edit($id)
     {
         $title = 'Edit Kelas';
         $data = Kelas::find($id);
@@ -87,6 +165,4 @@ public function edit($id)
         Alert::success('Berhasil', 'Data berhasil diubah');
         return redirect()->route('kelas');
     }
-
-
 }

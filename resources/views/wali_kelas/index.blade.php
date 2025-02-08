@@ -17,7 +17,7 @@
                                         Cari
                                     </button>
                                     <button class="btn btn-secondary" type="button"
-                                        onclick="window.location.href='{{ route('mapel') }}'">
+                                        onclick="window.location.href='{{ route('walikelas') }}'">
                                         reresh
                                     </button>
                                 </div>
@@ -46,7 +46,7 @@
                             <tr>
                                 <th scope="row">{{ $item->nip }}</th>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ $item->kelas->kelas }}</td>
+                                <td>{{ $item->detail_kelas->nama_kelas ?? 'Belum Memiliki Kelas' }}</td>
                                 <td>{{ $item->agama }}</td>
                                 <td>{{ $item->tgl_lahir }}</td>
 

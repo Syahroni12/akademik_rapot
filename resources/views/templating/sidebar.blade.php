@@ -26,6 +26,9 @@
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Menu</span>
             </li>
+            @if (auth()->user()->role == 'admin')
+
+
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('jurusan') }}" aria-expanded="{{ request()->routeIs('jurusan') ? 'true' : 'false' }}">
 
@@ -44,6 +47,16 @@
                         <i class="ti ti-article"></i>
                     </span>
                     <span class="hide-menu">Kelas</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('detail_kelas') }}" aria-expanded="{{ request()->routeIs('detail_kelas') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="ti ti-article"></i>
+                    </span>
+                    <span class="hide-menu">detail_kelas</span>
                 </a>
             </li>
             <li class="sidebar-item">
@@ -67,6 +80,16 @@
                 </a>
             </li>
             <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('pengikut_ekskul') }}" aria-expanded="{{ request()->routeIs('pengikut_ekskul') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="fas fa-handshake"></i>
+                    </span>
+                    <span class="hide-menu">pengikut_ekskul </span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('siswa') }}" aria-expanded="{{ request()->routeIs('siswa') ? 'true' : 'false' }}">
 
 
@@ -86,6 +109,21 @@
                     <span class="hide-menu">Wali Kelas</span>
                 </a>
             </li>
+            @endif
+            @if (auth()->user()->role == 'wali_kelas')
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('penilaian') }}" aria-expanded="{{ request()->routeIs('penilaian') ? 'true' : 'false'}}">
+
+
+                    <span>
+                        <i class="fas fa-book-open fa-pencil-alt"></i>
+
+
+                    </span>
+                    <span class="hide-menu">Kelas</span>
+                </a>
+            </li>
+            @endif
             {{-- <li class="sidebar-item">
                 <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
                     <span>
@@ -102,22 +140,29 @@
                     <span class="hide-menu">Card</span>
                 </a>
             </li> --}}
+
+            @if (auth()->user()->role == 'siswa')
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                <a class="sidebar-link" href="{{ route('mapelku') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-file-description"></i>
                     </span>
-                    <span class="hide-menu">Forms</span>
+                    <span class="hide-menu">Mapelku</span>
                 </a>
             </li>
+            @endif
+
+            @if (auth()->user()->role == 'kepsek')
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                <a class="sidebar-link" href="{{ route('kepsek_kelas') }}" aria-expanded="false">
                     <span>
-                        <i class="ti ti-typography"></i>
+                        <i class="ti ti-file-description"></i>
                     </span>
-                    <span class="hide-menu">Typography</span>
+                    <span class="hide-menu">Kelas</span>
                 </a>
             </li>
+            @endif
+
 
 
         </ul>

@@ -11,24 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswas', function (Blueprint $table) {
-            // $table->id();
-            $table->integer('nisn')->primary();
-
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-
-            $table->unsignedBigInteger('id_kelas');
-            $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('cascade');
-            $table->enum('semester', ['ganjil', 'genap']);
+        Schema::create('wali_kelas', function (Blueprint $table) {
+            $table->unsignedBigInteger('nip')->primary();
             $table->string('nama', 50);
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->date('tgl_lahir');
             $table->string('agama', 20);
             $table->string('tempat_lahir');
-            $table->string('tahun_masuk', 10);
+            $table->text('alamat');
+
+            $table->unsignedBigInteger('id_detail_kelas');
+            $table->foreign('id_detail_kelas')->references('id')->on('detail_kelas')->onDelete('cascade');
+            $table->unsignedBigInteger('id_user');
+
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
-            // $table->timestamps();
         });
     }
 
@@ -37,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswas');
+        Schema::dropIfExists('wali__kelas');
     }
 };

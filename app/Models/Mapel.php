@@ -18,4 +18,9 @@ class Mapel extends Model
     {
         return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
     }
+
+    public function penilaian() {
+        return $this->hasMany(Penilaian::class, 'id_mapel', 'kd_mapel');
+
+    }
 }
