@@ -30,6 +30,16 @@
 
 
             <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('atur_kepsek') }}" aria-expanded="{{ request()->routeIs('atur_kepsek') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="ti ti-article"></i>
+                    </span>
+                    <span class="hide-menu">Kepala Sekolah</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('jurusan') }}" aria-expanded="{{ request()->routeIs('jurusan') ? 'true' : 'false' }}">
 
 
@@ -79,16 +89,8 @@
                     <span class="hide-menu">ekskul</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('pengikut_ekskul') }}" aria-expanded="{{ request()->routeIs('pengikut_ekskul') ? 'true' : 'false' }}">
 
 
-                    <span>
-                        <i class="fas fa-handshake"></i>
-                    </span>
-                    <span class="hide-menu">pengikut_ekskul </span>
-                </a>
-            </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('siswa') }}" aria-expanded="{{ request()->routeIs('siswa') ? 'true' : 'false' }}">
 
@@ -121,6 +123,27 @@
 
                     </span>
                     <span class="hide-menu">Kelas</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('pengikut_ekskul') }}" aria-expanded="{{ request()->routeIs('pengikut_ekskul') ? 'true' : 'false' }}">
+
+
+                    <span>
+                        <i class="fas fa-handshake"></i>
+                    </span>
+                    <span class="hide-menu">pengikut_ekskul </span>
+                </a>
+            </li>
+
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('kelas_hadir') }}" aria-expanded="{{ request()->routeIs('kelas_hadir') ? 'true' : 'false' }}">
+
+
+
+                    <span class="hide-menu">Rekab Absen </span>
                 </a>
             </li>
             @endif

@@ -10,9 +10,13 @@
                 @csrf
                 <div class="mb-3">
                     <label for="nip" class="form-label">NIP/NBM</label>
-                    <input type="number" class="form-control" id="nip" aria-describedby="nip" name="nip" value="{{ $data->nip }}">
+                    <input type="number" class="form-control" id="nip" aria-describedby="nip" name="nipp" value="{{ $data->nip }}">
                     <small id="warning-text" class="text-danger" style="display: none;">Maksimal 10 karakter!</small>
 
+                </div>
+                <div class="mb-3">
+                    <label for="nama" class="form-label">nama</label>
+                    <input type="text" class="form-control" id="nama" aria-describedby="nama" name="nama" value="{{ $data->nama }}">
                 </div>
                 <input type="hidden" name="nip" value="{{ $data->nip }}">
                 <div class="mb-3">
@@ -26,10 +30,7 @@
                     </select>
                 </div>
 
-                <div class="mb-3">
-                    <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                    <input type="text" class="form-control" id="tempat_lahir" aria-describedby="tempat_lahir" name="tempat_lahir" value="{{ $data->tempat_lahir }}">
-                </div>
+
 
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>

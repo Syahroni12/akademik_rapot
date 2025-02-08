@@ -6,6 +6,7 @@ use App\Models\Ekskul;
 use App\Models\pengikut_ekskul;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -68,17 +69,7 @@ class EkskulController extends Controller
     {
 
         $title = 'Kelola Siswa di Ekskul';
-        $data = Siswa::with('detail_kelas')->where('nama', 'like', '%' . request('cari') . '%')
-            ->orWhere('nisn', 'like', '%' . request('cari') . '%')
-            ->orWhere('jenis_kelamin', 'like', '%' . request('cari') . '%')
-            ->orWhere('semester', 'like', '%' . request('cari') . '%')
-            ->orWhere('tahun_masuk', 'like', '%' . request('cari') . '%')
-            ->orWhere('tempat_lahir', 'like', '%' . request('cari') . '%')
-            ->orWhere('id_detail_kelas', 'like', '%' . request('cari') . '%')
-            ->orWhereHas('detail_kelas', function ($query) {
-                $query->where('nama_kelas', 'like', '%' . request('cari') . '%');
-            })
-            ->paginate(20);
+        $data = Siswa::where('id_detail_kelas', Auth::user()->wali_kelas->id_detail_kelas)->paginate(20);
         return view('pengikut_ekskul.index', compact('title', 'data'));
     }
 

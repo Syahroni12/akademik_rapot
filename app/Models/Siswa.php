@@ -33,4 +33,9 @@ class Siswa extends Model
     {
         return $this->hasMany(Penilaian::class, 'id_siswa', 'nisn');
     }
+
+    public function ketidakhadirans()
+    {
+        return $this->hasMany(Ketidakhadiran::class, 'id_siswa', 'nisn');
+    }
 }

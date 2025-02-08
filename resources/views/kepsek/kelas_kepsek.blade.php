@@ -48,7 +48,8 @@
                                 <td>{{ $item->kelas->jurusan->jurusan }}</td>
 
                                 <td>
-<a href="{{ route('lihat_progres', $item->id) }}" class="btn btn-primary">lihat progres</a>
+                                    <a href="{{ route('lihat_progres', $item->id) }}" class="btn btn-primary">lihat
+                                        progres</a>
                                 </td>
 
                             </tr>
@@ -61,12 +62,4 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Controllers\EkskulController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KepsekController;
+use App\Http\Controllers\KetidakhadiranController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\Wali_kelasController;
@@ -40,14 +41,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/hapus_ekskul/{id}', [EkskulController::class, 'hapus'])->name('hapus_ekskul');
 
 
-    Route::get('/pengikut_ekskul', [EkskulController::class, 'pengikut_ekskul'])->name('pengikut_ekskul');
-    Route::get('/ekskul_yangdiikuti/{id_siswa}', [EkskulController::class, 'detail_daftarekskul'])->name('detail_daftarekskul');
-    Route::get('/edit_pengikut_ekskul/{id}', [EkskulController::class, 'edit_pengikut_ekskul'])->name('edit_pengikut_ekskul');
 
-    Route::get('/tambah_daftarekskul/{id_siswa}', [EkskulController::class, 'tambah_pengikut_ekskul'])->name('tambah_daftarekskul');
-    Route::post('/store_daftarekskul', [EkskulController::class, 'store_pengikut_ekskul'])->name('store_daftarekskul');
-    Route::put('/update_pengikut_ekskul/{id}', [EkskulController::class, 'update_pengikut_ekskul'])->name('update_pengikut_ekskul');
-    Route::get('/hapus_pengikut_ekskul/{id}', [EkskulController::class, 'hapus_pengikut_ekskul'])->name('hapus_pengikut_ekskul');
 
     Route::get('/kelas', [KelasController::class, 'index'])->name('kelas');
     Route::get('/tambah_kelas', [KelasController::class, 'tambah'])->name('tambah_kelas');
@@ -92,7 +86,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 
-    Route::get('/kepsek', [KepsekController::class, 'index'])->name('kepsek');
+    Route::get('/atur_kepsek', [KepsekController::class, 'atur_kepsek'])->name('atur_kepsek');
+    Route::put('/update_kepsek/{id}', [KepsekController::class, 'update_kepsek'])->name('update_kepsek');
+
+
+
 });
 
 // Route::middleware(['auth', 'kepsek'])->group(function () {
@@ -108,6 +106,27 @@ Route::middleware(['auth', 'wali_kelas'])->group(function () {
     Route::put('/update_nilai/{id}', [Wali_kelasController::class, 'update_nilai'])->name('halaman_update_nilai');
     Route::post('/simpan_nilai', [Wali_kelasController::class, 'simpan_nilai'])->name('simpan_nilai');
 
+
+
+    Route::get('/pengikut_ekskul', [EkskulController::class, 'pengikut_ekskul'])->name('pengikut_ekskul');
+    Route::get('/ekskul_yangdiikuti/{id_siswa}', [EkskulController::class, 'detail_daftarekskul'])->name('detail_daftarekskul');
+    Route::get('/edit_pengikut_ekskul/{id}', [EkskulController::class, 'edit_pengikut_ekskul'])->name('edit_pengikut_ekskul');
+
+    Route::get('/tambah_daftarekskul/{id_siswa}', [EkskulController::class, 'tambah_pengikut_ekskul'])->name('tambah_daftarekskul');
+    Route::post('/store_daftarekskul', [EkskulController::class, 'store_pengikut_ekskul'])->name('store_daftarekskul');
+    Route::put('/update_pengikut_ekskul/{id}', [EkskulController::class, 'update_pengikut_ekskul'])->name('update_pengikut_ekskul');
+    Route::get('/hapus_pengikut_ekskul/{id}', [EkskulController::class, 'hapus_pengikut_ekskul'])->name('hapus_pengikut_ekskul');
+
+
+
+
+
+    Route::get('/kelas_hadir', [KetidakhadiranController::class, 'index'])->name('kelas_hadir');
+    // Route::get('/siswa_hadir/{id_detail_kelas}', [KetidakhadiranController::class, 'siswa'])->name('siswa_hadir');
+    Route::get('/absen/{id_siswa}', [KetidakhadiranController::class, 'absen'])->name('absen');
+    Route::post('/simpan_absen', [KetidakhadiranController::class, 'simpan_absen'])->name('simpan_absen');
+    Route::put('/update_absen/{id}', [KetidakhadiranController::class, 'update_absen'])->name('update_absen');
+
 });
 Route::get('/detail_nilai/{id}', [Wali_kelasController::class, 'detail_nilai'])->name('halaman_detail_nilai');
 
@@ -120,5 +139,10 @@ Route::middleware(['auth', 'kepsek'])->group(function () {
     Route::get('/kepsek_kelas', [KepsekController::class, 'kepsek_kelas'])->name('kepsek_kelas');
     Route::get('/lihat_progres/{id_detail_kelas}', [KepsekController::class, 'lihat_progres'])->name('lihat_progres');
 });
+
+
+
+// Route::get('/cetak_rapor/{id_siswa}', [Wali_kelasController::class, 'cetak_pdf'])->name('cetak_pdf');
+Route::get('/tes', [Wali_kelasController::class, 'tes'])->name('tes');
 
 Route::post('/ubah_password', [SiswaController::class, 'ubah_password'])->name('ubah_password');

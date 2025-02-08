@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Detail_kelas;
 use App\Models\Kelas;
+use App\Models\Kepsek;
 use App\Models\Mapel;
+use App\Models\pengikut_ekskul;
 use App\Models\Penilaian;
 use App\Models\Siswa;
 use App\Models\User;
 use App\Models\Wali_Kelas;
+// use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,13 +31,13 @@ class Wali_kelasController extends Controller
             ->where(function ($q) {
                 $cari = request('cari');
                 $q->where('nama', 'like', '%' . $cari . '%')
-                  ->orWhere('nip', 'like', '%' . $cari . '%')
-                  ->orWhere('jenis_kelamin', 'like', '%' . $cari . '%')
-                  ->orWhere('tgl_lahir', 'like', '%' . $cari . '%')
-                  ->orWhere('agama', 'like', '%' . $cari . '%')
-                  ->orWhere('tempat_lahir', 'like', '%' . $cari . '%')
-                  ->orWhere('alamat', 'like', '%' . $cari . '%')
-                  ->orWhere('id_detail_kelas', 'like', '%' . $cari . '%');
+                    ->orWhere('nip', 'like', '%' . $cari . '%')
+                    ->orWhere('jenis_kelamin', 'like', '%' . $cari . '%')
+                    ->orWhere('tgl_lahir', 'like', '%' . $cari . '%')
+                    ->orWhere('agama', 'like', '%' . $cari . '%')
+                    ->orWhere('tempat_lahir', 'like', '%' . $cari . '%')
+                    ->orWhere('alamat', 'like', '%' . $cari . '%')
+                    ->orWhere('id_detail_kelas', 'like', '%' . $cari . '%');
             })
             ->orWhereHas('detail_kelas', function ($query) {
                 $query->where('nama_kelas', 'like', '%' . request('cari') . '%');
@@ -44,24 +50,25 @@ class Wali_kelasController extends Controller
 
 
 
-    public function mapel_kelas($id_siswa){
+    public function mapel_kelas($id_siswa)
+    {
 
         $siswa = Siswa::where('nisn', $id_siswa)->first();
-        $title = 'Mapel Kelas Siswa' . " " .($siswa->nama);
-    //     $mapels = Mapel::where('id_kelas', $siswa->detail_kelas->id_kelas)
-    // ->where('semester', $siswa->semester)
-    // ->whereDoesntHave('penilaians', function ($query) use ($id_siswa) {
-    //     $query->where('id_siswa', $id_siswa);
-    // })
-    // ->get();
-    $mapel_belum = Mapel::where('id_kelas', $siswa->detail_kelas->id_kelas)
-    ->where('semester', $siswa->semester)
-    ->whereDoesntHave('penilaian', function ($query) use ($id_siswa) {
-        $query->where('id_siswa', $id_siswa);
-    })
-    ->get();
+        $title = 'Mapel Kelas Siswa' . " " . ($siswa->nama);
+        //     $mapels = Mapel::where('id_kelas', $siswa->detail_kelas->id_kelas)
+        // ->where('semester', $siswa->semester)
+        // ->whereDoesntHave('penilaians', function ($query) use ($id_siswa) {
+        //     $query->where('id_siswa', $id_siswa);
+        // })
+        // ->get();
+        $mapel_belum = Mapel::where('id_kelas', $siswa->detail_kelas->id_kelas)
+            ->where('semester', $siswa->semester)
+            ->whereDoesntHave('penilaian', function ($query) use ($id_siswa) {
+                $query->where('id_siswa', $id_siswa);
+            })
+            ->get();
 
-    $mapel_sudah = Penilaian::with('mapel')->where('id_siswa', $id_siswa)->where('semester', $siswa->semester)->where('id_detail_kelas', $siswa->id_detail_kelas) ->get();
+        $mapel_sudah = Penilaian::with('mapel')->where('id_siswa', $id_siswa)->where('semester', $siswa->semester)->where('id_detail_kelas', $siswa->id_detail_kelas)->get();
         return view('wali_kelas.mapel', compact('title', 'mapel_belum', 'mapel_sudah', 'siswa'));
     }
 
@@ -120,7 +127,6 @@ class Wali_kelasController extends Controller
             Alert::error('Gagal', $th->getMessage());
             return back()->withInput();
         }
-
     }
     public function update(Request $request, $nip)
     {
@@ -144,9 +150,9 @@ class Wali_kelasController extends Controller
         try {
             DB::beginTransaction();
             $tgl_lahir = date('Y-m-d', strtotime($request->tgl_lahir));
-            $cek= Wali_Kelas::where('nip', '!=', $nip)->where('id_detail_kelas', $request->id_detail_kelas)->first();
-            if($cek){
-                $ubah=Wali_Kelas::where('id_detail_kelas', $request->id_detail_kelas)->first();
+            $cek = Wali_Kelas::where('nip', '!=', $nip)->where('id_detail_kelas', $request->id_detail_kelas)->first();
+            if ($cek) {
+                $ubah = Wali_Kelas::where('id_detail_kelas', $request->id_detail_kelas)->first();
                 $ubah->id_detail_kelas = null;
                 $ubah->save();
             }
@@ -174,7 +180,6 @@ class Wali_kelasController extends Controller
             Alert::error('Gagal', $th->getMessage());
             return back()->withInput();
         }
-
     }
 
 
@@ -198,13 +203,14 @@ class Wali_kelasController extends Controller
     public function edit($nip)
     {
         $title = 'Detail Wali Kelas';
-        $kelas= Detail_kelas::all();
+        $kelas = Detail_kelas::all();
         $data = Wali_Kelas::where('nip', $nip)->first();
         return view('wali_kelas.edit', compact('title', 'data', 'kelas'));
     }
 
 
-    public function kelasku(){
+    public function kelasku()
+    {
 
         $title = 'Kelas Ampu Saya';
         $data = Siswa::where('id_detail_kelas', Auth::user()->wali_kelas->id_detail_kelas)->paginate(20);
@@ -219,11 +225,12 @@ class Wali_kelasController extends Controller
 
         $siswa = Siswa::where('nisn', $id_siswa)->first();
         $mapel = Mapel::where('kd_mapel', $id_mapel)->first();
-        $title = 'Nilai Siswa Untuk Mapel '.$mapel->mapel;
+        $title = 'Nilai Siswa Untuk Mapel ' . $mapel->mapel;
         return view('wali_kelas.nilai', compact('title', 'siswa', 'mapel'));
     }
 
-    public function simpan_nilai(Request $request){
+    public function simpan_nilai(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'id_siswa' => 'required',
@@ -266,8 +273,7 @@ class Wali_kelasController extends Controller
             Alert::success('Berhasil', 'Data berhasil ditambahkan');
 
             return redirect()->route('mapel_kelas', $request->id_siswa);
-
-        }catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             DB::rollBack();
             Alert::error('Gagal', $th->getMessage());
             return back()->withInput();
@@ -317,7 +323,7 @@ class Wali_kelasController extends Controller
             DB::commit();
             Alert::success('Berhasil', 'Data berhasil diubah');
             return redirect()->route('mapel_kelas', $penilaian->id_siswa);
-        }catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             DB::rollBack();
             Alert::error('Gagal', $th->getMessage());
             return back()->withInput();
@@ -333,4 +339,50 @@ class Wali_kelasController extends Controller
     }
 
 
+
+    public function cetak_pdf($id_siswa)
+    {
+        $siswa = Siswa::where('nisn', $id_siswa)->first();
+
+        $mapel_belum = Mapel::where('id_kelas', $siswa->detail_kelas->id_kelas)
+            ->where('semester', $siswa->semester)
+            ->whereDoesntHave('penilaian', function ($query) use ($id_siswa) {
+                $query->where('id_siswa', $id_siswa);
+            })
+            ->get();
+
+        if ($mapel_belum->count() > 0) {
+            Alert::error('Gagal', 'Masih ada mapel yang belum dinilai');
+            return back();
+        }
+
+        $mapel_sudah = Penilaian::with('mapel')->where('id_siswa', $id_siswa)->where('semester', $siswa->semester)->where('id_detail_kelas', $siswa->id_detail_kelas)->get();
+
+        $wali_kelas = Wali_Kelas::where('id_detail_kelas', $siswa->id_detail_kelas)->first();
+
+        $kepsek = Kepsek::first();
+
+        $kelas = $siswa->detail_kelas->nama_kelas;
+        $pengikut_ekskul = pengikut_ekskul::where('id_siswa', $id_siswa)->get();
+        $kehadiran=Ket::where('id_siswa', $id_siswa)->get();
+
+
+
+
+        // $mapel_belum = Mapel::where('id_kelas', $siswa->detail_kelas->id_kelas)
+        // ->where('semester', $siswa->semester)
+        // ->whereDoesntHave('penilaian', function ($query) use ($id_siswa) {
+        //     $query->where('id_siswa', $id_siswa);
+        // })
+        // ->get();
+
+    }
+
+
+    public function tes(){
+
+        $pdf = PDF::loadView('rapor');
+        return $pdf->download('rapor.pdf');
+
+    }
 }

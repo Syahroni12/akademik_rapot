@@ -29,8 +29,7 @@
                                 <td>{{ $item->semester }}</td>
                                 <td>{{ $item->tahun_masuk }}</td>
 
-                                <td> <a href="{{ route('detail_daftarekskul', $item->nisn) }}" class="btn btn-primary">Detail Ekskul</a>
-                                 <a href="{{ route('tambah_daftarekskul', $item->nisn) }}" class="btn btn-primary">Daftar Ekskul</a>
+                                <td> <a href="{{ route('absen', $item->nisn) }}" class="btn btn-primary">Absen</a>
 
                                 </td>
 
@@ -39,9 +38,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="d-flex justify-content-center">
-                {{ $data->links() }}
-            </div>
+
         </div>
     </div>
 

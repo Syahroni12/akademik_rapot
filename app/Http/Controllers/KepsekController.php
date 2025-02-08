@@ -61,7 +61,7 @@ public function lihat_progres($id_detail_kelas){
         return view('kepsek.atur_kepsek',compact('title','data'));
     }
 
-    public function update_kepsek(Request $request){
+    public function update_kepsek(Request $request,$nip){
 
         $validator = Validator::make($request->all(), [
             'nip' => 'required',
@@ -74,9 +74,9 @@ public function lihat_progres($id_detail_kelas){
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        $kepsek = Kepsek::first();
-        $kepsek->nip = $request->nip;
+// dd($request->nipp);
+        $kepsek = Kepsek::where('nip',$nip)->first();
+        $kepsek->nip = $request->nipp;
         $kepsek->nama = $request->nama;
         $kepsek->alamat = $request->alamat;
         $kepsek->jenis_kelamin = $request->jenis_kelamin;

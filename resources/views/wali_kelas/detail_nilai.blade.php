@@ -91,7 +91,7 @@
 
 
                 <div class="mb-3">
-                    <label for="deskripsi" class="form-label">deskripsi</label>
+                    <label for="deskripsi" class="form-label">Kompetensi</label>
                     <textarea name="deskripsi" id="" cols="30" rows="10" class="form-control" disabled>{{ $data->deskripsi }}</textarea>
 
                 </div>
