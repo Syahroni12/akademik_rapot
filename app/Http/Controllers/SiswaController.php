@@ -16,6 +16,24 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class SiswaController extends Controller
 {
+
+public function dashboard_siswa() {
+
+    $title = 'Dashboard Siswa';
+    $siswa=Siswa::where('nisn', Auth::user()->siswa->nisn)->first();
+    $id_siswa = $siswa->nisn;
+    $mapel_belum = Mapel::where('id_kelas', $siswa->detail_kelas->id_kelas)
+    ->where('semester', $siswa->semester)
+    ->whereDoesntHave('penilaian', function ($query) use ($id_siswa) {
+        $query->where('id_siswa', $id_siswa);
+    })
+    ->count();
+    $mapel_sudah = Penilaian::with('mapel')->where('id_siswa', $id_siswa)->where('semester', $siswa->semester)->where('id_detail_kelas', $siswa->id_detail_kelas) ->count();
+
+    return view('siswa.dashboard', compact('title', 'siswa', 'mapel_belum', 'mapel_sudah'));
+
+}
+
     public function index()
     {
 

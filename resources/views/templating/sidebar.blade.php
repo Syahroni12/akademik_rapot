@@ -14,14 +14,47 @@
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Home</span>
             </li>
+            @if (auth()->user()->role == 'kepsek')
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <a class="sidebar-link" href="{{ route('dashboard_kepsek') }}" aria-expanded="{{ request()->routeIs('dashboard_kepsek') ? 'true' : 'false' }}">
                     <span>
                         <i class="ti ti-layout-dashboard"></i>
                     </span>
                     <span class="hide-menu">Dashboard</span>
                 </a>
             </li>
+            @endif
+            @if (auth()->user()->role == 'admin')
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('dashboard_admin') }}" aria-expanded="{{ request()->routeIs('dashboard_admin') ? 'true' : 'false' }}">
+                    <span>
+                        <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Dashboard</span>
+                </a>
+            </li>
+            @endif
+            @if (auth()->user()->role == 'wali_kelas')
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('dashboard_walikelas') }}" aria-expanded="{{ request()->routeIs('dashboard_walikelas') ? 'true' : 'false' }}">
+                    <span>
+                        <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Dashboard</span>
+                </a>
+            </li>
+            @endif
+            @if (auth()->user()->role == 'siswa')
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('dashboard_siswa') }}" aria-expanded="{{ request()->routeIs('dashboard_siswa') ? 'true' : 'false' }}">
+                    <span>
+                        <i class="ti ti-layout-dashboard"></i>
+                    </span>
+                    <span class="hide-menu">Dashboard</span>
+                </a>
+            </li>
+            @endif
+
             <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Menu</span>

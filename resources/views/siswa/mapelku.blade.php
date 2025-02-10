@@ -4,6 +4,7 @@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6">
+                    <a href="{{ route('cetak_pdf', auth()->user()->siswa->nisn) }}" class="btn btn-success mb-4">Cetak Raport</a>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="belum-tab" data-bs-toggle="tab" data-bs-target="#belum"

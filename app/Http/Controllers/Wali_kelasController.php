@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Detail_kelas;
 use App\Models\Kelas;
 use App\Models\Kepsek;
+use App\Models\Ketidakhadiran;
 use App\Models\Mapel;
 use App\Models\pengikut_ekskul;
 use App\Models\Penilaian;
@@ -23,6 +24,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class Wali_kelasController extends Controller
 {
+
+
+    public function dashboard_walikelas(){
+
+        $title = 'Dashboard Wali Kelas';
+$jumlah_siswa= Siswa::where('id_detail_kelas', Auth::user()->wali_kelas->id_detail_kelas)->count();
+
+return view('wali_kelas.dashboard', compact('title','jumlah_siswa'));
+
+    }
     public function index()
     {
         $title = 'Data Wali Kelas';
@@ -357,6 +368,11 @@ class Wali_kelasController extends Controller
         }
 
         $mapel_sudah = Penilaian::with('mapel')->where('id_siswa', $id_siswa)->where('semester', $siswa->semester)->where('id_detail_kelas', $siswa->id_detail_kelas)->get();
+        $mapel_sudahh = Penilaian::with('mapel')->where('id_siswa', $id_siswa)->where('semester', $siswa->semester)->where('id_detail_kelas', $siswa->id_detail_kelas)->first();
+
+        $tahun_ajaran=$mapel_sudahh->tahun_ajaran1.'/'.$mapel_sudahh->tahun_ajaran2;
+
+
 
         $wali_kelas = Wali_Kelas::where('id_detail_kelas', $siswa->id_detail_kelas)->first();
 
@@ -364,8 +380,8 @@ class Wali_kelasController extends Controller
 
         $kelas = $siswa->detail_kelas->nama_kelas;
         $pengikut_ekskul = pengikut_ekskul::where('id_siswa', $id_siswa)->get();
-        $kehadiran=Ket::where('id_siswa', $id_siswa)->get();
-
+        $kehadiran=Ketidakhadiran::where('id_siswa', $id_siswa)->where('semester', $siswa->semester)->where('id_detail_kelas', $siswa->id_detail_kelas)->first();
+$kepsek=Kepsek::first();
 
 
 
@@ -375,6 +391,8 @@ class Wali_kelasController extends Controller
         //     $query->where('id_siswa', $id_siswa);
         // })
         // ->get();
+        $pdf = PDF::loadView('rapor', compact('siswa', 'mapel_sudah', 'wali_kelas', 'kepsek', 'kelas', 'pengikut_ekskul', 'kehadiran','tahun_ajaran','kepsek'));
+        return $pdf->download('rapor'. $siswa->nisn . ' ' . $siswa->nama . '.pdf');
 
     }
 

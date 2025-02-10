@@ -31,6 +31,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middle
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/jurusan', [JurusanController::class, 'index'])->name('jurusan');
+    Route::get('/dashboard_admin', [DashboardController::class, 'dashboard_admin'])->name('dashboard_admin');
     Route::post('/tambah_jurusan', [JurusanController::class, 'tambah'])->name('tambah_jurusan');
     Route::post('/edit_jurusan', [JurusanController::class, 'edit'])->name('edit_jurusan');
     Route::get('/hapus_jurusan/{id}', [JurusanController::class, 'hapus'])->name('hapus_jurusan');
@@ -79,7 +80,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/tambah_walikelas', [Wali_kelasController::class, 'tambah'])->name('tambah_walikelas');
     Route::post('/tambah_walikelass', [Wali_kelasController::class, 'store'])->name('tambah_walikelass');
     Route::put('/update_walikelas/{nip}', [Wali_kelasController::class, 'update'])->name('update_walikelas');
-    Route::get('/edit_walikelas/{ld', [Wali_kelasController::class, 'edit'])->name('edit_walikelas');
+    Route::get('/edit_walikelas/{nip}', [Wali_kelasController::class, 'edit'])->name('edit_walikelas');
     Route::get('/hapus_walikelas/{nip}', [Wali_kelasController::class, 'hapus'])->name('hapus_walikelas');
     // Route::get('/edit_walikelas/{nip}', [Wali_kelasController::class, 'edit'])->name('edit_walikelas');
     Route::get('/detail_walikelas/{nip}', [Wali_kelasController::class, 'detail'])->name('detail_walikelas');
@@ -98,6 +99,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // });
 
 Route::middleware(['auth', 'wali_kelas'])->group(function () {
+
+
+    Route::get('/dashboard_walikelas', [Wali_kelasController::class, 'dashboard_walikelas'])->name('dashboard_walikelas');
+
     Route::get('/penilaian', [Wali_kelasController::class, 'kelasku'])->name('penilaian');
     Route::get('/mapel_kelas/{id_siswa}', [Wali_kelasController::class, 'mapel_kelas'])->name('mapel_kelas');
     Route::get('/nilai/{id_siswa}/{id_mapel}', [Wali_kelasController::class, 'nilai'])->name('halaman_nilai');
@@ -131,18 +136,20 @@ Route::middleware(['auth', 'wali_kelas'])->group(function () {
 Route::get('/detail_nilai/{id}', [Wali_kelasController::class, 'detail_nilai'])->name('halaman_detail_nilai');
 
 Route::middleware(['auth', 'siswa'])->group(function () {
+    Route::get('/dashboard_siswa', [SiswaController::class, 'dashboard_siswa'])->name('dashboard_siswa');
     Route::get('/mapelku', [SiswaController::class, 'mapelku'])->name('mapelku');
     Route::get('/detail_nilai/{id_mapel}', [SiswaController::class, 'detail_nilai'])->name('detail_nilai');
 });
 
 Route::middleware(['auth', 'kepsek'])->group(function () {
+    Route::get('/dashboard_kepsek', [KepsekController::class, 'dashboard_kepsek'])->name('dashboard_kepsek');
     Route::get('/kepsek_kelas', [KepsekController::class, 'kepsek_kelas'])->name('kepsek_kelas');
     Route::get('/lihat_progres/{id_detail_kelas}', [KepsekController::class, 'lihat_progres'])->name('lihat_progres');
 });
 
 
 
-// Route::get('/cetak_rapor/{id_siswa}', [Wali_kelasController::class, 'cetak_pdf'])->name('cetak_pdf');
-Route::get('/tes', [Wali_kelasController::class, 'tes'])->name('tes');
+Route::get('/cetak_rapor/{id_siswa}', [Wali_kelasController::class, 'cetak_pdf'])->name('cetak_pdf');
+// Route::get('/tes', [Wali_kelasController::class, 'tes'])->name('tes');
 
 Route::post('/ubah_password', [SiswaController::class, 'ubah_password'])->name('ubah_password');

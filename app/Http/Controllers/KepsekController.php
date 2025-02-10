@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Detail_kelas;
+use App\Models\Ekskul;
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Kepsek;
 use App\Models\Mapel;
@@ -25,18 +27,36 @@ class KepsekController extends Controller
         return view('kepsek.kelas_kepsek', compact('title', 'data'));
     }
 
-public function lihat_progres($id_detail_kelas){
-        $title='Progres Siswa';
+
+    public function dashboard_kepsek()
+    {
+
+        $title = 'Dashboard Kepsek';
+
+        $jumlah_kelas = Kelas::count();
+        $jumlah_detailkelas=Detail_kelas::count();
+        $jumlah_siswa = Siswa::count();
+        $jumlah_wali_kelas = Wali_Kelas::count();
+        $jumlah_mapel = Mapel::count();
+        $jumlah_ekskul = Ekskul::count();
+        $jumlah_jurusan = Jurusan::count();
+
+        return view('kepsek.dashboard_kepsek', compact('title', 'jumlah_kelas', 'jumlah_siswa', 'jumlah_wali_kelas', 'jumlah_mapel', 'jumlah_ekskul', 'jumlah_jurusan','jumlah_detailkelas'));
+    }
+
+    public function lihat_progres($id_detail_kelas)
+    {
+        $title = 'Progres Siswa';
         $detailKelas = Detail_kelas::find($id_detail_kelas);
-        $wali_kelas=Wali_Kelas::where('id_detail_kelas',$id_detail_kelas)->first();
-        $siswas = Siswa::with('penilaians','detail_kelas')->where('id_detail_kelas', $id_detail_kelas)->get();
+        $wali_kelas = Wali_Kelas::where('id_detail_kelas', $id_detail_kelas)->first();
+        $siswas = Siswa::with('penilaians', 'detail_kelas')->where('id_detail_kelas', $id_detail_kelas)->get();
 
         foreach ($siswas as $siswa) {
             // Ambil kelas siswa saat ini (sesuai id_detail_kelas terakhir yang dia ikuti)
 
 
             // Hitung total mapel yang harus dinilai untuk kelas siswa dan semester tertentu
-            $totalMapel = Mapel::where('id_kelas', $detailKelas->id_kelas)->where('semester',$siswa->semester)->count();
+            $totalMapel = Mapel::where('id_kelas', $detailKelas->id_kelas)->where('semester', $siswa->semester)->count();
 
 
             // Hitung jumlah mapel yang sudah dinilai untuk siswa ini berdasarkan semester & tahun ajaran
@@ -50,18 +70,20 @@ public function lihat_progres($id_detail_kelas){
             // Hitung progres dalam persen
             $siswa->progres_penilaian = $totalMapel > 0 ? round(($mapelDinilai / $totalMapel) * 100, 2) : 0;
         }
-        return view('kepsek.siswa_progres',compact('title','siswas','detailKelas','wali_kelas'));
-}
-
-
-    public function atur_kepsek(){
-        $data=Kepsek::first();
-        $title='Data Kepsek';
-
-        return view('kepsek.atur_kepsek',compact('title','data'));
+        return view('kepsek.siswa_progres', compact('title', 'siswas', 'detailKelas', 'wali_kelas'));
     }
 
-    public function update_kepsek(Request $request,$nip){
+
+    public function atur_kepsek()
+    {
+        $data = Kepsek::first();
+        $title = 'Data Kepsek';
+
+        return view('kepsek.atur_kepsek', compact('title', 'data'));
+    }
+
+    public function update_kepsek(Request $request, $nip)
+    {
 
         $validator = Validator::make($request->all(), [
             'nip' => 'required',
@@ -74,8 +96,8 @@ public function lihat_progres($id_detail_kelas){
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-// dd($request->nipp);
-        $kepsek = Kepsek::where('nip',$nip)->first();
+        // dd($request->nipp);
+        $kepsek = Kepsek::where('nip', $nip)->first();
         $kepsek->nip = $request->nipp;
         $kepsek->nama = $request->nama;
         $kepsek->alamat = $request->alamat;

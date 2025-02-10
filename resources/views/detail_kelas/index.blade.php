@@ -18,7 +18,7 @@
                                     </button>
                                     <button class="btn btn-secondary" type="button"
                                         onclick="window.location.href='/detail_kelas'">
-                                        reresh
+                                        refresh
                                     </button>
                                 </div>
                             </div>
